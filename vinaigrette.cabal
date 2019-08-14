@@ -1,0 +1,126 @@
+cabal-version:      2.4
+name:               vinaigrette
+version:            0.0.0
+license:            MIT
+author:             Iurii Pachin
+maintainer:         Iurii Pachin
+homepage:           https://github.com/iupii/vinaigrette
+bug-reports:        https://github.com/iupii/vinaigrette/issues
+build-type:         Simple
+extra-source-files: LICENSE.md
+                    README.md
+                    stack.yaml
+
+common common-options
+  build-depends:       base
+
+  ghc-options:         -Wall
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+                       -freverse-errors
+                       -Wpartial-fields
+
+  default-language:    Haskell2010
+
+--  default-extensions:  BangPatterns
+--                       ConstraintKinds
+--                       DataKinds
+--                       DeriveGeneric
+--                       DerivingStrategies
+--                       DerivingVia
+--                       FlexibleContexts
+--                       FlexibleInstances
+--                       GeneralizedNewtypeDeriving
+--                       InstanceSigs
+--                       KindSignatures
+--                       LambdaCase
+--                       MultiParamTypeClasses
+--                       OverloadedStrings
+--                       OverloadedLabels
+--                       RecordWildCards
+--                       ScopedTypeVariables
+--                       StandaloneDeriving
+--                       TupleSections
+--                       TypeApplications
+--                       TypeFamilies
+--                       TypeOperators
+--                       ViewPatterns
+
+source-repository head
+  type:     git
+  location: https://github.com/iupii/vinaigrette
+
+library
+  import: common-options
+  exposed-modules:  Vinaigrette
+                    Vinaigrette.Api
+                    Vinaigrette.App
+                    Vinaigrette.Log
+                    Vinaigrette.Server
+  other-modules:    Paths_vinaigrette
+  hs-source-dirs:   src
+  build-depends:    aeson
+                  , bytestring
+                  , data-default-class
+                  , fast-logger
+                  , hasql
+                  , mtl
+                  , resource-pool
+                  , servant
+                  , servant-auth-server
+                  , servant-server
+                  , text
+                  , time
+                  , transformers
+                  , wai
+                  , wai-extra
+                  , warp
+  ghc-options:    -Werror
+
+executable vinaigrette
+  import: common-options
+  main-is:          Main.hs
+  other-modules:    Paths_vinaigrette
+  hs-source-dirs:   app
+  build-depends:    vinaigrette
+  ghc-options:      -threaded -rtsopts -with-rtsopts=-N
+
+common test-deps
+  build-depends:  tasty
+                , tasty-discover
+                , tasty-hedgehog
+                , tasty-hspec
+                , tasty-quickcheck
+                , tasty-smallcheck
+                , QuickCheck
+                , hedgehog
+test-suite servant-test-suite
+  import: common-options, test-deps
+  type:             exitcode-stdio-1.0
+  main-is:          Tests.hs
+  other-modules:    Paths_vinaigrette
+                    Specs
+  hs-source-dirs:   tests/servant
+  build-depends:    fast-logger
+                  , http-client
+                  , servant
+                  , servant-client
+                  , servant-server
+                  , text
+                  , vinaigrette
+                  , warp
+  default-language: Haskell2010
+  ghc-options:      -Wall -rtsopts -threaded -with-rtsopts=-N
+
+benchmark vinaigrette-benchmarks
+  import: common-options
+  type:             exitcode-stdio-1.0
+  main-is:          Main.hs
+  other-modules:    Paths_vinaigrette
+  hs-source-dirs:   benchmark
+  build-depends:    criterion, vinaigrette
+  ghc-options:      -rtsopts -threaded -with-rtsopts=-N
