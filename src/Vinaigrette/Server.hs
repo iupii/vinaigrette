@@ -33,4 +33,4 @@ application env = serve (Proxy @Api) (server env)
 
 jsonRequestLogger :: IO Middleware
 jsonRequestLogger =
-  mkRequestLogger $ def { outputFormat = CustomOutputFormatWithDetails formatAsJSON }
+    mkRequestLogger $ def { outputFormat = CustomOutputFormatWithDetails formatAsJSON }

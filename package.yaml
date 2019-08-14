@@ -6,34 +6,34 @@ author: "Iurii Pachin"
 maintainer: "Iurii Pachin"
 
 extra-source-files:
-- LICENSE.md
-- package.yaml
-- README.md
-- stack.yaml
+  - LICENSE.md
+  - package.yaml
+  - README.md
+  - stack.yaml
 
 ghc-options:
-- -Wall
-#- -Werror
+  - -Wall
+  #- -Werror
 
 library:
   dependencies:
-  - base
-  - mtl
-  - transformers
-  - time
-  - text
-  - bytestring
-  - aeson
-  - hasql
-  - resource-pool
-  - fast-logger
-  - wai
-  - wai-extra
-  - warp
-  - servant
-  - servant-server
-  - servant-auth-server
-  - data-default-class
+    - base
+    - mtl
+    - transformers
+    - time
+    - text
+    - bytestring
+    - aeson
+    - hasql
+    - resource-pool
+    - fast-logger
+    - wai
+    - wai-extra
+    - warp
+    - servant
+    - servant-server
+    - servant-auth-server
+    - data-default-class
   source-dirs: src
 
 executables:
@@ -41,22 +41,37 @@ executables:
     source-dirs: app
     main: Main.hs
     dependencies:
-    - base
-    - vinaigrette
-    ghc-options:
-    - -rtsopts
-    - -threaded
-    - -with-rtsopts=-N
-
-tests:
-  vinaigrette-test-suite:
-    source-dirs: tests
-    main: Main.hs
-    dependencies:
       - base
       - vinaigrette
-      - tasty
-      - tasty-hspec
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N
+
+_test-dependencies: &test-dependencies
+  base: {}
+  vinaigrette: {}
+  tasty: {}
+  tasty-discover: {}
+  tasty-hspec: {}
+  tasty-quickcheck: {}
+  tasty-smallcheck: {}
+  tasty-hedgehog: {}
+  QuickCheck: {}
+  hedgehog: {}
+tests:
+  servant-test-suite:
+    source-dirs: tests/servant
+    main: Tests.hs
+    dependencies:
+      <<: *test-dependencies
+      text: {}
+      http-client: {}
+      warp: {}
+      servant: {}
+      servant-client: {}
+      servant-server: {}
+      fast-logger: {}
     ghc-options:
       - -rtsopts
       - -threaded
@@ -67,10 +82,10 @@ benchmarks:
     source-dirs: benchmark
     main: Main.hs
     dependencies:
-    - base
-    - vinaigrette
-    - criterion
+      - base
+      - vinaigrette
+      - criterion
     ghc-options:
-    - -rtsopts
-    - -threaded
-    - -with-rtsopts=-N
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N

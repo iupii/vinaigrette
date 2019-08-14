@@ -9,7 +9,6 @@ import Vinaigrette.Log
 import Vinaigrette.Server
 
 
-
 port :: Int
 port = 8080
 

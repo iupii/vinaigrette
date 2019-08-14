@@ -8,4 +8,4 @@ module Vinaigrette.Api
 import Data.Text
 import Servant.API
 
-type Api = Get '[JSON] Text
+type Api = Get '[PlainText] Text
