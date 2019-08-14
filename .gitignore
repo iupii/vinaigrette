@@ -1,0 +1,7 @@
+/.idea/
+*.iml
+/.stack-work/
+/*.cabal
+/tmp/
+/out/
+*.lock
