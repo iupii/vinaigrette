@@ -4,6 +4,7 @@ packages:
 extra-deps: []
 
 # Travis
+sudo: false
 language: generic
 cache:
   directories:
