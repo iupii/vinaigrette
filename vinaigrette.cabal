@@ -82,7 +82,7 @@ library
   ghc-options:    -Werror
 
 executable vinaigrette
-  import: common-options
+  import:           common-options
   main-is:          Main.hs
   other-modules:    Paths_vinaigrette
   hs-source-dirs:   app
@@ -99,13 +99,21 @@ common test-deps
                 , QuickCheck
                 , hedgehog
 test-suite servant-test-suite
-  import: common-options, test-deps
+  import:           common-options, test-deps
   type:             exitcode-stdio-1.0
   main-is:          Tests.hs
   other-modules:    Paths_vinaigrette
                     Specs
   hs-source-dirs:   tests/servant
-  build-depends:    fast-logger
+  build-depends:    tasty
+                  , tasty-discover
+                  , tasty-hedgehog
+                  , tasty-hspec
+                  , tasty-quickcheck
+                  , tasty-smallcheck
+                  , QuickCheck
+                  , hedgehog
+                  ,fast-logger
                   , http-client
                   , servant
                   , servant-client
@@ -117,7 +125,7 @@ test-suite servant-test-suite
   ghc-options:      -Wall -rtsopts -threaded -with-rtsopts=-N
 
 benchmark vinaigrette-benchmarks
-  import: common-options
+  import:           common-options
   type:             exitcode-stdio-1.0
   main-is:          Main.hs
   other-modules:    Paths_vinaigrette
